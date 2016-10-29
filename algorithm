@@ -1,0 +1,22 @@
+    void combinationSumFunction(vector<int> &a,vector<int>&sol,vector<vector<int>>& ret,int target,int index)//每个形参后面都要加上取地址&，不然无法返回ret的类型。
+    {
+        if(target==0) ret.push_back(sol);//一般是递归的最后一步。当target为0时，即达到要求。把sol加入到返回ret中。
+        if(index<a.size()&&a[index]==a[index+1]) index++;//去除重复数字
+        for(int i=index;i<a.size()&&target-a[i]>=0;i++)
+        {
+            sol.push_back(a[i]);
+            combinationSumFunction(a,sol,ret,target-a[i],i); 
+            sol.pop_back();
+        }//开始递归，递归的过程中将路径存入sol中，当最后符合target为0的时候，把那个树支的路径返回ret中
+        
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> sol;
+        vector<vector<int>> ret;
+        sort(candidates.begin(),candidates.end());
+        combinationSumFunction(candidates,sol,ret,target,0);
+        return ret;
+        
+       
+        
+    }
